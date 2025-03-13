@@ -1,0 +1,105 @@
+<!-- Arquivo tasks.html (Lista de Tarefas) -->
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Gerenciador de Tarefas</title>
+<link href="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Barra lateral de navegação -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Gerenciador de Tarefas</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('show_tasks') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Tarefas</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Logout</span></a>
+            </li>
+        </ul>
+        <!-- Fim da barra lateral -->
+        <!-- Conteúdo Principal -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            
+            <div id="content">
+                <div class="container-fluid">
+                    
+                    <h1 class="h3 mb-2 text-gray-800">Tarefas</h1>
+                    <p class="mb-4">Gerencie suas tarefas aqui!</p>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Tarefas Cadastradas</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <!-- Tabela de tarefas -->
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Descrição</th>
+                                            <th>Prazo</th>
+                                            <th>Status</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                        <!-- Formulário para adicionar nova tarefa -->
+                                        <form action="/tasks" method="POST">
+                                        <tr>
+                                            <th><input type="text" name="title" required></th>
+                                            <th><input type="text" name="description"></th>
+                                            <th><input type="date" name="duedate"></th>
+                                            <th>
+                                                <select name="status">
+                                                    <option value="Pendente">Pendente</option>
+                                                    <option value="Atrasada">Atrasada</option>
+                                                    <option value="Concluída">Concluída</option>
+                                                </select>
+                                            </th>
+                                            <th><input type="submit" value="Adicionar tarefa"></th>
+                                        </tr>
+                                        </form>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Exibe mensagem caso não existam tarefas -->
+                                        {% if tasks|length < 1 %}
+                                        <tr>
+                                            <td colspan="5"><h4>Nenhuma tarefa cadastrada</h4></td>
+                                        </tr>
+                                        {% else %}
+                                        <!-- Exibe as tarefas cadastradas -->
+                                        {% for task in tasks %}
+                                        <tr>
+                                            <td>{{ task[2] }}</td>
+                                            <td>{{ task[3] }}</td>
+                                            <td>{{ task[4] }}</td>
+                                            <td>{{ task[5] }}</td>
+                                            <td>
+                                                <a href="/delete/{{task[0]}}">Deletar</a> |
+                                                <a href="/update/{{task[0]}}">Editar</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
