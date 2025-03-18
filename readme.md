@@ -37,8 +37,8 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ### 1️⃣ Clonar o Repositório
 ```sh
-$ git clone https://github.com/seu-usuario/gerenciador-tarefas-flask.git
-$ cd gerenciador-tarefas-flask
+$ git clone https://github.com/bertucci/gerenciador-de-tarefas.git
+$ cd gerenciador-de-tarefas
 ```
 
 ### 2️⃣ Criar e Ativar um Ambiente Virtual
